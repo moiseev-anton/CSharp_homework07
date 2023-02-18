@@ -50,9 +50,15 @@ double[] AverageInColumn(int[,] array)
         for (int i = 0; i < array.GetLength(0); i++)
             sum += array[i,j];
 
-    res[j] = Math.Round(sum / array.GetLength(0), 1); // Среднее сразу огкругляем до 1 знака после запятой
+    res[j] = sum / array.GetLength(0);
     }
     return res;
+}
+
+void PrintArray(double[] arr)
+{
+    foreach (double i in arr)
+    Write($"{i:f1}\t");
 }
 
 
@@ -61,4 +67,4 @@ int[,] matrix = GetArray(3, 4, 0, 10); // Массив 3 строки, 4 сто�
 PrintMatrix(matrix);
 double[] averages = AverageInColumn(matrix);
 WriteLine("Среднее арифметическое каждого столбца:");
-WriteLine(String.Join(";  ", averages));
+PrintArray(averages);
