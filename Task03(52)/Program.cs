@@ -10,7 +10,7 @@ using System;
 using static System.Console;
 
 // Заполнение двумерного массива
-int[,] GetArray(int m, int n, int minVal, int maxVal)
+int[,] GetMatrix(int m, int n, int minVal, int maxVal)
 {
     int[,] result = new int[m, n];
 
@@ -39,32 +39,34 @@ void PrintMatrix(int[,] arr)
     }
 }
 
-// Метод подстчета среднего арифметического по столбцам
-double[] AverageInColumn(int[,] array)
+// Подсчет среднего арифметического по столбцам
+double[] GetColumnAverages(int[,] array)
 {
     double[] res = new double[array.GetLength(1)];
 
     for (int j = 0; j < array.GetLength(1); j++)
     {
         double sum = 0;
-        for (int i = 0; i < array.GetLength(0); i++)
-            sum += array[i,j];
 
-    res[j] = sum / array.GetLength(0);
+        for (int i = 0; i < array.GetLength(0); i++)
+            sum += array[i, j];
+
+        res[j] = sum / array.GetLength(0);
     }
     return res;
 }
 
+// Вывод одномерного массива
 void PrintArray(double[] arr)
 {
     foreach (double i in arr)
-    Write($"{i:f1}\t");
+        Write($"{i:f1}\t");
 }
 
 
 Clear();
-int[,] matrix = GetArray(3, 4, 0, 10); // Массив 3 строки, 4 столбца, рандом [0; 10]
+int[,] matrix = GetMatrix(3, 4, 0, 10); // Массив 3 строки, 4 столбца, рандом [0; 10]
 PrintMatrix(matrix);
-double[] averages = AverageInColumn(matrix);
+double[] averages = GetColumnAverages(matrix);
 WriteLine("Среднее арифметическое каждого столбца:");
 PrintArray(averages);

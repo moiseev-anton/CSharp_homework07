@@ -7,8 +7,16 @@
 using System;
 using static System.Console;
 
+// Ввод целого числа с консоли
+int Prompt(string message)
+{
+    Write(message);
+    int result = Convert.ToInt32(ReadLine());
+    return result;
+}
+
 // Заполнение двумерного массива
-double[,] GetArray(int m, int n, int minVal, int maxVal)
+double[,] GetMatrix(int m, int n, int minVal, int maxVal)
 {
     double[,] result = new double[m, n];
 
@@ -23,7 +31,7 @@ double[,] GetArray(int m, int n, int minVal, int maxVal)
 }
 
 // Вывод двумерного массива
-void PrintArray(double[,] arr)
+void PrintMartix(double[,] arr)
 {
     for (int i = 0; i < arr.GetLength(0); i++)
     {
@@ -38,9 +46,8 @@ void PrintArray(double[,] arr)
     }
 }
 
+
 Clear();
-Write("Введите количество строк = ");
-int rows = Convert.ToInt32(ReadLine());
-Write("Введите количество столбцов = ");
-int columns = Convert.ToInt32(ReadLine());
-PrintArray(GetArray(rows, columns, -10, 10));
+int rows = Prompt("Введите количество строк = ");
+int columns = Prompt("Введите количество столбцов = ");
+PrintMartix(GetMatrix(rows, columns, -10, 10));

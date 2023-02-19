@@ -9,8 +9,16 @@
 using System;
 using static System.Console;
 
+// Ввод строки с консоли
+string Prompt(string message)
+{
+    Write(message);
+    string result = ReadLine()!;
+    return result;
+}
+
 // Заполнение двумерного массива
-int[,] GetArray(int m, int n, int minVal, int maxVal)
+int[,] GetMatrix(int m, int n, int minVal, int maxVal)
 {
     int[,] result = new int[m, n];
 
@@ -25,24 +33,24 @@ int[,] GetArray(int m, int n, int minVal, int maxVal)
 }
 
 // Вывод двумерного массива
-void PrintArray(int[,] arr)
+void PrintMatrix(int[,] array)
 {
-    for (int i = 0; i < arr.GetLength(0); i++)
+    for (int i = 0; i < array.GetLength(0); i++)
     {
-        for (int j = 0; j < arr.GetLength(1); j++)
+        for (int j = 0; j < array.GetLength(1); j++)
         {
-            if (arr[i, j] >= 0)
+            if (array[i, j] >= 0)
                 Write(" ");
-            Write($"{arr[i, j]} \t");
+            Write($"{array[i, j]} \t");
         }
         WriteLine();
     }
 }
 
-// Метод перевода строки в целочисленный массив
+// Перевод строки в массив
 int[] StringToIntArray(string stringValue)
 {
-    char[] separators = new char[] {' ', '.', ',',  };
+    char[] separators = new char[] { ' ', '.', ',', '[', ']' };
     string[] stringArray = stringValue.Split(separators, System.StringSplitOptions.RemoveEmptyEntries);
     int[] result = new int[stringArray.Length];
 
@@ -52,27 +60,24 @@ int[] StringToIntArray(string stringValue)
     return result;
 }
 
-// Метод проверяет не выходит ли заданная позиция за размеры массива
-bool CheckPosition(int[] nums, int[,] arr)
+// Проверка не выходит ли заданная позиция за размеры массива
+bool BoundCheck(int[,] arr, int[] pos)
 {
-    if (nums[0] > arr.GetLength(0) - 1
-     || nums[1] > arr.GetLength(1) - 1
-     || nums[0] < 0
-     || nums[1] < 0) return false;
+    if (pos[0] > arr.GetLength(0) - 1
+     || pos[1] > arr.GetLength(1) - 1
+     || pos[0] < 0
+     || pos[1] < 0) return false;
     else return true;
 }
 
 
 Clear();
-int[,] array = GetArray(3, 4, -10, 10); // Массив 3 строки, 4 столбца, рандом [-10; 10]
-PrintArray(array);
-Write("Введите координаты элемента: ");
-string coordinates = ReadLine()!;
+int[,] matrix = GetMatrix(3, 4, 0, 10); // Массив 3 строки, 4 столбца, рандом [0; 10].
+PrintMatrix(matrix);
+string coordinates = Prompt("Введите координаты элемента через пробел: ");
 int[] position = StringToIntArray(coordinates);
 
-if (position.Length < 2) // Если введено меньше 2 чисел, то ошибка, если больше, взяты будут только первые 2
-    WriteLine("Координаты введены не корректно");
-else if (CheckPosition(position, array))
-    WriteLine(array[position[0], position[1]]);
+if (BoundCheck(matrix, position))
+    WriteLine(matrix[position[0], position[1]]);
 else
     WriteLine("Такого числа в массиве нет");
